@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# Copy this file to .git/hooks to enable this post-receive hook
+
+deploy_dir='/home/pi/deploy/excel-web-query-service'
+repo_dir='/home/pi/repos/excel-web-query-service.git'
+
+while read oldrev newrev ref
+do
+    if [[ $ref =~ .*/master$ ]];
+    then
+        echo "=> Deploying master branch..."
+		git --work-tree=$deploy_dir --git-dir=$repo_dir checkout -f
+
+		echo
+		echo "=> Installing deployed master branch locally..."
+		$deploy_dir/gradlew -p $deploy_dir clean install
+
+		echo "=> Done"
+    else
+        echo "Ref $ref received successfully. Doing nothing: only the master branch will be deployed on this server."
+    fi
+done

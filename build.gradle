@@ -1,0 +1,25 @@
+
+apply plugin: 'java'
+apply plugin: 'maven'
+
+group 'com.github.spartusch'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    springVersion = '5.0.2.RELEASE'
+}
+
+dependencies {
+    compileOnly "org.springframework:spring-context:${springVersion}"
+    compileOnly "org.springframework:spring-web:${springVersion}"
+
+    testCompile "org.springframework:spring-web:${springVersion}"
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.assertj:assertj-core:3.9.0'
+}
