@@ -13,8 +13,8 @@ do
 		git --work-tree=$deploy_dir --git-dir=$repo_dir checkout -f
 
 		echo
-		echo "=> Installing deployed master branch locally..."
-		$deploy_dir/gradlew -p $deploy_dir clean install
+		echo "=> Publishing deployed master branch locally..."
+		$deploy_dir/gradlew -p $deploy_dir clean publishToMavenLocal
 
 		echo "=> Done"
     else
