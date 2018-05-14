@@ -2,8 +2,8 @@
 
 # Copy this file to .git/hooks to enable this post-receive hook
 
-deploy_dir='/home/pi/deploy/excel-web-query-service'
-repo_dir='/home/pi/repos/excel-web-query-service.git'
+deploy_dir='/home/pi/deploy/excel-web-query'
+repo_dir='/home/pi/repos/excel-web-query.git'
 
 while read oldrev newrev ref
 do
