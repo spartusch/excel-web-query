@@ -28,11 +28,7 @@ public class WebQueryFactoryImpl implements WebQueryFactory {
 
         sb.append("\r\n");
 
-        final Charset charset = Charset.forName("UTF-8");
-        final byte[] content = sb.toString().getBytes(charset);
-        final String fileName = "webquery.iqy";
-
-        return new WebQuery(content, charset, fileName);
+        return new WebQuery(sb.toString(), Charset.forName("UTF-8"));
     }
 
     private void replaceAll(final StringBuilder sb, final String pattern, final String replacement) {

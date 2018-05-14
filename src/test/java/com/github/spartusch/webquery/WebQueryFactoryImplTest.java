@@ -27,12 +27,6 @@ public class WebQueryFactoryImplTest {
     }
 
     @Test
-    public void test_createWebQuery_fileExtensionIsIqy() {
-        final WebQuery query = factory.create("http://www.foo.bar/iqy?a=b");
-        assertThat(query.getFileName()).matches("[\\w]+\\.iqy");
-    }
-
-    @Test
     public void test_createWebQuery_simpleHappyCaseWithDiscriminator() {
         final WebQuery query = factory.create("http://www.foo.bar/iqy?a=b", "/iqy");
         assertThat(content(query)).isEqualTo("WEB\r\n1\r\nhttp://www.foo.bar?a=b\r\n");

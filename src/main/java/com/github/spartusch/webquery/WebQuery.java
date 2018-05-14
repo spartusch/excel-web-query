@@ -2,7 +2,6 @@ package com.github.spartusch.webquery;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 
 import java.nio.charset.Charset;
 
@@ -10,19 +9,26 @@ public class WebQuery {
 
     private byte[] content;
     private Charset charset;
-    private String fileName;
 
-    public WebQuery(final byte[] content, final Charset charset, final String fileName) {
-        this.content = content;
+    public WebQuery(final String content, final Charset charset) {
+        this.content = content.getBytes(charset);
         this.charset = charset;
-        this.fileName = fileName;
     }
 
     public HttpEntity<byte[]> toHttpEntity() {
+        return toHttpEntity(null);
+    }
+
+    public HttpEntity<byte[]> toHttpEntity(final String attachmentFileName) {
         final var headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-        headers.set(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileName);
+
+        headers.set(HttpHeaders.CONTENT_TYPE, "text/plain; charset=" + charset.name());
         headers.setContentLength(content.length);
+
+        if (attachmentFileName != null) {
+            headers.set(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + attachmentFileName);
+        }
+
         return new HttpEntity<>(content, headers);
     }
 
@@ -32,14 +38,6 @@ public class WebQuery {
 
     public Charset getCharset() {
         return charset;
-    }
-
-    public String getFileName() {
-        return fileName;
-    }
-
-    public void setFileName(final String fileName) {
-        this.fileName = fileName;
     }
 
 }

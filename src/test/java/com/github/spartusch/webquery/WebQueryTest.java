@@ -16,13 +16,7 @@ public class WebQueryTest {
 
     @Before
     public void setUp() {
-        webQuery = new WebQuery("content".getBytes(), Charset.forName("UTF-8"), "fn");
-    }
-
-    @Test
-    public void test_setFileName() {
-        webQuery.setFileName("fn2");
-        assertThat(webQuery.getFileName()).isEqualTo("fn2");
+        webQuery = new WebQuery("content", Charset.forName("UTF-8"));
     }
 
     @Test
@@ -34,7 +28,7 @@ public class WebQueryTest {
     @Test
     public void test_toHttpEntity_contentType() {
         HttpEntity<byte[]> httpEntity = webQuery.toHttpEntity();
-        assertThat(httpEntity.getHeaders()).contains(entry("Content-Type", singletonList("application/octet-stream")));
+        assertThat(httpEntity.getHeaders()).contains(entry("Content-Type", singletonList("text/plain; charset=UTF-8")));
     }
 
     @Test
@@ -44,8 +38,15 @@ public class WebQueryTest {
     }
 
     @Test
-    public void test_toHttpEntity_contentDisposition() {
+    public void test_toHttpEntity_noContentDisposition() {
         HttpEntity<byte[]> httpEntity = webQuery.toHttpEntity();
-        assertThat(httpEntity.getHeaders()).contains(entry("Content-Disposition", singletonList("attachment; filename=fn")));
+        assertThat(httpEntity.getHeaders()).doesNotContainKey("Content-Disposition");
     }
+
+    @Test
+    public void test_toHttpEntity_contentDispositionWithFilename() {
+        HttpEntity<byte[]> httpEntity = webQuery.toHttpEntity("fn.iqy");
+        assertThat(httpEntity.getHeaders()).contains(entry("Content-Disposition", singletonList("attachment; filename=fn.iqy")));
+    }
+
 }
