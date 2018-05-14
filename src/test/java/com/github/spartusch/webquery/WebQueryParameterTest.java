@@ -14,17 +14,17 @@ public class WebQueryParameterTest {
         assertThat(p.getDescription()).isEqualTo("descr");
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = NullPointerException.class)
     public void test_p_nameIsRequired() {
         WebQueryParameter.p(null, "some", "some");
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = NullPointerException.class)
     public void test_p_defaultValueIsRequired() {
         WebQueryParameter.p("some", null, "some");
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = NullPointerException.class)
     public void test_p_descriptionIsRequired() {
         WebQueryParameter.p("some", "some", null);
     }

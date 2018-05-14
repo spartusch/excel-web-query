@@ -1,5 +1,7 @@
 package com.github.spartusch.webquery;
 
+import java.util.Objects;
+
 public class WebQueryParameter {
 
     private String name;
@@ -7,13 +9,15 @@ public class WebQueryParameter {
     private String description;
 
     public static WebQueryParameter p(final String name, final String defaultValue, final String description) {
-        if (name == null || defaultValue == null || description == null) {
-            throw new IllegalArgumentException("All WebQueryParameter attributes are required and cannot be null");
-        }
-        final WebQueryParameter p = new WebQueryParameter();
+        Objects.requireNonNull(name);
+        Objects.requireNonNull(defaultValue);
+        Objects.requireNonNull(description);
+
+        final var p = new WebQueryParameter();
         p.name = name;
         p.defaultValue = defaultValue;
         p.description = description;
+
         return p;
     }
 
@@ -28,4 +32,5 @@ public class WebQueryParameter {
     public String getDescription() {
         return description;
     }
+
 }

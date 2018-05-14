@@ -19,7 +19,7 @@ public class WebQuery {
     }
 
     public HttpEntity<byte[]> toHttpEntity() {
-        HttpHeaders headers = new HttpHeaders();
+        final var headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
         headers.set(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileName);
         headers.setContentLength(content.length);
@@ -41,4 +41,5 @@ public class WebQuery {
     public void setFileName(final String fileName) {
         this.fileName = fileName;
     }
+
 }
