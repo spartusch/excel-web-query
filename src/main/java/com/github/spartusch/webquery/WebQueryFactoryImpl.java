@@ -5,20 +5,20 @@ import org.springframework.stereotype.Service;
 import java.nio.charset.Charset;
 
 @Service
-public class WebQueryServiceImpl implements WebQueryService {
+public class WebQueryFactoryImpl implements WebQueryFactory {
 
     @Override
-    public final WebQuery createWebQuery(final String uri, final WebQueryParameter... params) {
-        return createWebQuery(uri, null, params);
+    public final WebQuery create(final String uri, final WebQueryParameter... params) {
+        return create(uri, null, params);
     }
 
     @Override
-    public final WebQuery createWebQuery(final String uri, final String discriminator, final WebQueryParameter... params) {
-        final StringBuilder sb = new StringBuilder("WEB\r\n1\r\n").append(uri);
+    public final WebQuery create(final String uri, final String discriminator, final WebQueryParameter... params) {
+        final var sb = new StringBuilder("WEB\r\n1\r\n").append(uri);
 
         for (final WebQueryParameter param : params) {
-            final String pattern = "{" + param.getName() + "}";
-            final String replacement = "[\"" + param.getDefaultValue() + "\",\"" + param.getDescription() + "\"]";
+            final var pattern = "{" + param.getName() + "}";
+            final var replacement = "[\"" + param.getDefaultValue() + "\",\"" + param.getDescription() + "\"]";
             replaceAll(sb, pattern, replacement);
         }
 
