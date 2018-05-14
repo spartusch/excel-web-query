@@ -39,3 +39,9 @@ publishing {
         }
     }
 }
+
+test {
+    testLogging {
+        events "started", "skipped", "failed"
+    }
+}
