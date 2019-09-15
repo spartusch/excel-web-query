@@ -2,13 +2,10 @@ package com.github.spartusch.webquery;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.http.HttpEntity;
 
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
-import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.entry;
 
 public class WebQueryTest {
 
@@ -16,37 +13,26 @@ public class WebQueryTest {
 
     @Before
     public void setUp() {
-        webQuery = new WebQuery("content", Charset.forName("UTF-8"));
+        webQuery = new WebQuery("content", StandardCharsets.UTF_8);
     }
 
     @Test
-    public void test_toHttpEntity_content() {
-        HttpEntity<byte[]> httpEntity = webQuery.toHttpEntity();
-        assertThat(httpEntity.getBody()).isEqualTo(webQuery.getContent());
+    public void test_getContentType() {
+        assertThat(webQuery.getContentType()).isEqualTo("text/plain; charset=UTF-8");
     }
 
     @Test
-    public void test_toHttpEntity_contentType() {
-        HttpEntity<byte[]> httpEntity = webQuery.toHttpEntity();
-        assertThat(httpEntity.getHeaders()).contains(entry("Content-Type", singletonList("text/plain; charset=UTF-8")));
+    public void test_getContentLength() {
+        assertThat(webQuery.getContentLength()).isEqualTo(webQuery.getContent().length);
     }
 
     @Test
-    public void test_toHttpEntity_contentLength() {
-        HttpEntity<byte[]> httpEntity = webQuery.toHttpEntity();
-        assertThat(httpEntity.getHeaders()).contains(entry("Content-Length", singletonList(String.valueOf(webQuery.getContent().length))));
+    public void test_getContentDisposition_withFilename() {
+        assertThat(webQuery.getContentDisposition("fn.iqy")).isEqualTo("attachment; filename=fn.iqy");
     }
 
-    @Test
-    public void test_toHttpEntity_noContentDisposition() {
-        HttpEntity<byte[]> httpEntity = webQuery.toHttpEntity();
-        assertThat(httpEntity.getHeaders()).doesNotContainKey("Content-Disposition");
+    @Test(expected = NullPointerException.class)
+    public void test_getContentDisposition_withoutFilename() {
+        webQuery.getContentDisposition(null);
     }
-
-    @Test
-    public void test_toHttpEntity_contentDispositionWithFilename() {
-        HttpEntity<byte[]> httpEntity = webQuery.toHttpEntity("fn.iqy");
-        assertThat(httpEntity.getHeaders()).contains(entry("Content-Disposition", singletonList("attachment; filename=fn.iqy")));
-    }
-
 }
