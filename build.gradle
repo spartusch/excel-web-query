@@ -31,7 +31,6 @@ ext {
 }
 
 dependencies {
-    compileOnly "org.springframework:spring-context:${springVersion}"
     compileOnly "org.springframework:spring-web:${springVersion}"
 
     testCompile "org.springframework:spring-web:${springVersion}"
