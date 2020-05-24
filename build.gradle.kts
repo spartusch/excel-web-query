@@ -24,10 +24,6 @@ val sourcesJar by tasks.creating(Jar::class) {
 }
 
 publishing {
-    repositories {
-        maven { url = uri("file://$projectDir/../mvn-repo") }
-    }
-
     publications {
         create<MavenPublication>("maven") {
             from(components["kotlin"])
