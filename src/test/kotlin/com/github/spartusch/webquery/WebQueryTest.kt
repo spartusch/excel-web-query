@@ -37,5 +37,4 @@ class WebQueryTest {
     fun getContentDisposition() {
         assertThat(WebQuery.getContentDisposition("fn.iqy")).isEqualTo("attachment; filename=fn.iqy")
     }
-
 }

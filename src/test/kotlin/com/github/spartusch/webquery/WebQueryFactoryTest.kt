@@ -58,5 +58,4 @@ class WebQueryFactoryTest {
         assertThat(query.toString())
                 .startsWith("WEB\r\n1\r\nhttp://www.foo.bar/?a=[\"def1\",\"dscr1\"]&b=[\"def2\",\"dscr2\"]\r\n")
     }
-
 }

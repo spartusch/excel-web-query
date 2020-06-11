@@ -2,10 +2,13 @@
 plugins {
     kotlin("jvm") version "1.3.72"
     `maven-publish`
+
+    id("io.gitlab.arturbosch.detekt") version "1.9.1"
 }
 
 repositories {
     mavenCentral()
+    jcenter() // required for detekt
 }
 
 dependencies {
@@ -13,6 +16,8 @@ dependencies {
 
     testImplementation("org.junit.jupiter:junit-jupiter:5.6.2")
     testImplementation("org.assertj:assertj-core:3.16.1")
+
+    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.9.1")
 }
 
 group = "com.github.spartusch"
@@ -30,6 +35,10 @@ publishing {
             artifact(sourcesJar)
         }
     }
+}
+
+detekt {
+    buildUponDefaultConfig = true
 }
 
 tasks {
