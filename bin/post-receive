@@ -12,11 +12,7 @@ do
     echo "=> Deploying master branch ..."
     git --work-tree=$deploy_dir --git-dir=$repo_dir checkout -f
 
-    echo
-    echo "=> Publishing deployed master branch locally ..."
-    $deploy_dir/gradlew -p $deploy_dir clean publishToMavenLocal
-
-		echo "=> Done"
+    cd $deploy_dir && bin/build-image.sh
 	else
 	  echo "Branch $ref received successfully. Doing nothing: Only the master branch will be deployed."
 	fi

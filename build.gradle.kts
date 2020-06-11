@@ -48,4 +48,9 @@ tasks {
         useJUnitPlatform()
         testLogging.events("started", "skipped", "failed")
     }
+
+    register<Exec>("dockerImage") {
+        val name = "${project.group}/${project.name}"
+        commandLine = listOf("docker", "image", "build", "-t", "$name:${project.version}", "-t", "$name:latest", ".")
+    }
 }
