@@ -1,9 +1,9 @@
 
 plugins {
-    kotlin("jvm") version "1.4.0"
+    kotlin("jvm") version "1.4.20"
     `maven-publish`
 
-    id("io.gitlab.arturbosch.detekt") version "1.12.0"
+    id("io.gitlab.arturbosch.detekt") version "1.14.2"
 }
 
 repositories {
@@ -18,10 +18,10 @@ configurations
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
 
-    testImplementation("org.junit.jupiter:junit-jupiter:5.+")
-    testImplementation("org.assertj:assertj-core:3.+")
+    testImplementation("org.junit.jupiter:junit-jupiter:latest.release")
+    testImplementation("org.assertj:assertj-core:latest.release")
 
-    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.+")
+    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:latest.release")
 }
 
 group = "com.github.spartusch"
@@ -46,8 +46,8 @@ detekt {
 }
 
 tasks {
-    withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>() {
-        kotlinOptions.jvmTarget = "1.8"
+    withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+        kotlinOptions.jvmTarget = "11"
     }
 
     jar {
