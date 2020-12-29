@@ -1,9 +1,9 @@
 
 plugins {
-    kotlin("jvm") version "1.4.20"
+    kotlin("jvm") version "1.4.21"
     `maven-publish`
 
-    id("io.gitlab.arturbosch.detekt") version "1.14.2"
+    id("io.gitlab.arturbosch.detekt") version "1.15.0"
 }
 
 repositories {
@@ -11,9 +11,9 @@ repositories {
     jcenter() // required for detekt
 }
 
-configurations
-    .filter { it.name.endsWith("compileClasspath", ignoreCase = true) || it.name == "detektPlugins" }
-    .forEach { it.resolutionStrategy.activateDependencyLocking() }
+dependencyLocking {
+	lockAllConfigurations()
+}
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
@@ -25,7 +25,7 @@ dependencies {
 }
 
 group = "com.github.spartusch"
-version = "2.0.0-SNAPSHOT"
+version = "2.0.0"
 
 val sourcesJar by tasks.creating(Jar::class) {
     archiveClassifier.set("sources")
@@ -52,14 +52,14 @@ tasks {
 
     jar {
         manifest.attributes(
-                "Automatic-Module-Name" to "com.github.spartusch.webquery",
-                "Implementation-Version" to project.version
+			"Automatic-Module-Name" to "com.github.spartusch.webquery",
+			"Implementation-Version" to project.version
         )
     }
 
     test {
         useJUnitPlatform()
-        testLogging.events("started", "skipped", "failed")
+        testLogging.events("skipped", "failed")
     }
 
     register<Exec>("dockerImage") {
