@@ -17,21 +17,22 @@ these URLs.
 - Microsoft Excel will now automatically import the response from the URL in your web
   query whenever it imports external data
 
-## How to build and publish this library
-
-Build this library with Gradle and publish it, e.g. locally:
-```
-./gradlew publishToMavenLocal
-```
-
-You can also build a base image for Docker:
-```
-./bin/build-image.sh
-```
-
 ## How to use this library
 
-Usage is quite simple: Create a new `WebQuery` by calling `WebQueryFactory.create`.
+Add Jitpack as a repository to your project and add a dependency for excel-web-query in order to
+use this library (the code snippet below uses Gradle's Kotlin DSL):
+```
+repositories {
+    maven { url = uri("https://jitpack.io") }
+}
+
+dependencies {
+    implementation("com.github.spartusch:excel-web-query:latest.release")
+}
+```
+
+The actual usage of the library is straightforward:
+Create a new `WebQuery` by calling `WebQueryFactory.create`.
 This library is written in Kotlin but tested with Java and Kotlin.
 
 ### Example on how to create a `ResponseEntity` for Spring MVC
@@ -58,4 +59,16 @@ headers[HttpHeaders.CONTENT_LENGTH] = webQuery.contentLength.toString()
 headers[HttpHeaders.CONTENT_DISPOSITION] = WebQuery.getContentDisposition("webquery.iqy")
 
 val response = ResponseEntity(ByteArrayResource(webQuery.contentBytes), headers, HttpStatus.OK)
+```
+
+## How to build and publish this library
+
+Build this library with Gradle and publish it, e.g. locally:
+```
+./gradlew publishToMavenLocal
+```
+
+You can also build a base image for Docker:
+```
+./bin/build-image.sh
 ```
