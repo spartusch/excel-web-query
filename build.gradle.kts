@@ -25,7 +25,7 @@ dependencies {
 }
 
 group = "com.github.spartusch"
-version = "2.0.1"
+version = "2.0.2-SNAPSHOT"
 
 val sourcesJar by tasks.creating(Jar::class) {
     archiveClassifier.set("sources")
